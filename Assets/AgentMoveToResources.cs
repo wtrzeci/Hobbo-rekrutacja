@@ -12,7 +12,7 @@ public class AgentMoveToResources : MonoBehaviour
     private List<StorageBuilding> StorageBuildings;
     [SerializeField] private GameResourceSO RawResource;
     [SerializeField] private GameResourceSO ProcessedResource;
-    private GameResourceSO WantedResource;
+
     private GameResourceSO OwnedResource;
     [SerializeField]
     GameResourcesList Resources;
@@ -96,7 +96,6 @@ public class AgentMoveToResources : MonoBehaviour
         {
             if (!ExtractionBuildings[0].TryUseBuilding(RawResource, 1)){return;}
             OwnedResource = RawResource;
-            WantedResource = ProcessedResource;
             StartMovingToProcessingPlant();
             return;
         }
