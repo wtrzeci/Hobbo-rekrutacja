@@ -12,8 +12,17 @@ public class AgentMoveToResources : MonoBehaviour
     private List<StorageBuilding> StorageBuildings;
     [SerializeField] private GameResourceSO RawResource;
     [SerializeField] private GameResourceSO ProcessedResource;
-
-    private GameResourceSO OwnedResource;
+    public static Action<GameResourceSO> OnResourceChange;
+    private GameResourceSO _ownedResource;
+    private GameResourceSO OwnedResource
+    {
+        get => _ownedResource;
+        set
+        {
+            _ownedResource = value;
+            OnResourceChange?.Invoke(value);
+        }
+    }
     [SerializeField]
     GameResourcesList Resources;
     private NavMeshAgent Agent;
