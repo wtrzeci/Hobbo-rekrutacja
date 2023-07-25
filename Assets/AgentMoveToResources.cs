@@ -103,9 +103,13 @@ public class AgentMoveToResources : MonoBehaviour
         else Agent.velocity = Vector3.zero;
         if (Target == TargetType.extractor)
         {
-            if (!ExtractionBuildings[0].TryUseBuilding(RawResource, 1)){return;}
-            OwnedResource = RawResource;
-            StartMovingToProcessingPlant();
+            if (OwnedResource is null)
+            {
+                if (!ExtractionBuildings[0].TryUseBuilding(RawResource, 1)) { return; }
+                    OwnedResource = RawResource;
+            }
+            if (ProductionBuildings is not null && ProductionBuildings.Count >0)
+                StartMovingToProcessingPlant();
             return;
         }
 
