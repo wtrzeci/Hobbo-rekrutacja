@@ -269,6 +269,19 @@ MonoBehaviour:
   RawResource: {fileID: 11400000, guid: 795efae3f160520408a9f448e352f7e7, type: 2}
   ProcessedResource: {fileID: 11400000, guid: 0c3e8e98b5cb351459d436f738749146, type: 2}
   Resources: {fileID: 0}
+--- !u!114 &208837433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208837426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61173d1bc2d036d43a222624d96af644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCanvas: {fileID: 0}
 --- !u!1 &224613094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1130,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 208837430}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d2be49778612c084fa94da9b67ac0b57,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 208837433}
   m_SourcePrefab: {fileID: 100100000, guid: d2be49778612c084fa94da9b67ac0b57, type: 3}
 --- !u!1 &991860242
 GameObject:
