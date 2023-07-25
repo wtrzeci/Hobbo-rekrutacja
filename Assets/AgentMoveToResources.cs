@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +15,7 @@ public class AgentMoveToResources : MonoBehaviour
     [SerializeField] private GameResourceSO ProcessedResource;
     public static Action<GameResourceSO> OnResourceChange;
     private GameResourceSO _ownedResource;
+    int cachedIndex = 0;
     private GameResourceSO OwnedResource
     {
         get => _ownedResource;
@@ -75,14 +77,16 @@ public class AgentMoveToResources : MonoBehaviour
     private void StartMovingToExtractionBuilding()
     {
         Target = TargetType.extractor;
-        Agent.destination = ExtractionBuildings[0].transform.position;
+        cachedIndex = UnityEngine.Random.Range(0, ExtractionBuildings.Count);
+        Agent.destination = ExtractionBuildings[cachedIndex].transform.position;
     }
 
     private void StartMovingToProcessingPlant()
     {
         
         Target = TargetType.manufacture;
-        Agent.destination = ProductionBuildings[0].transform.position;
+        cachedIndex = UnityEngine.Random.Range(0, ProductionBuildings.Count);
+        Agent.destination = ProductionBuildings[cachedIndex].transform.position;
     }
 
     private void OnDestroy()
@@ -105,7 +109,7 @@ public class AgentMoveToResources : MonoBehaviour
         {
             if (OwnedResource is null)
             {
-                if (!ExtractionBuildings[0].TryUseBuilding(RawResource, 1)) { return; }
+                if (!ExtractionBuildings[cachedIndex].TryUseBuilding(RawResource, 1)) { return; }
                     OwnedResource = RawResource;
             }
             if (ProductionBuildings is not null && ProductionBuildings.Count >0)
@@ -115,10 +119,10 @@ public class AgentMoveToResources : MonoBehaviour
 
         if (Target == TargetType.manufacture)
         {
-            ProductionBuildings[0].AddResources(OwnedResource);
+            ProductionBuildings[cachedIndex].AddResources(OwnedResource);
             if(StorageBuildings is not null && StorageBuildings.Count != 0)
             {
-                if (ProductionBuildings[0].TryUseBuilding(1))
+                if (ProductionBuildings[cachedIndex].TryUseBuilding(1))
                 {
                     GetItemFromProduction();
                     
@@ -132,7 +136,7 @@ public class AgentMoveToResources : MonoBehaviour
 
         if (Target == TargetType.storage)
         {
-            StorageBuildings[0].AddResources(OwnedResource);
+            StorageBuildings[cachedIndex].AddResources(OwnedResource);
             OwnedResource = null;
             StartMovingToExtractionBuilding();
             
@@ -141,8 +145,9 @@ public class AgentMoveToResources : MonoBehaviour
     private void GetItemFromProduction()
     {
         OwnedResource = ProcessedResource;
+        cachedIndex = UnityEngine.Random.Range(0, StorageBuildings.Count);
         Target = TargetType.storage;
-        Agent.destination = StorageBuildings[0].transform.position;
+        Agent.destination = StorageBuildings[cachedIndex].transform.position;
     }
 }
 
